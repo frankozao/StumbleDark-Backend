@@ -1,0 +1,26 @@
+{
+  "name": "node-starter",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node test-download-assets.js"
+  },
+  "engines": {
+    "node": ">=16.x"
+  },
+  "dependencies": {
+    "base-x": "^5.0.0",
+    "bs58": "^6.0.0",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "fs": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.17.0",
+    "path": "^0.12.7",
+    "readline-sync": "^1.4.10",
+    "steam-user": "^5.2.0",
+    "uuid": "^10.0.0"
+  }
+}

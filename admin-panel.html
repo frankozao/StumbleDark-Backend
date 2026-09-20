@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lilita+One&display=swap" rel="stylesheet">
+    <title>StumbleDark</title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #050505;
+            --card-bg: rgba(255, 255, 255, 0.025);
+            --card-hover: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-strong: rgba(255, 255, 255, 0.18);
+            --text: #ffffff;
+            --muted: #888888;
+            --muted-dark: #555555;
+            --success: #ffffff;
+            --danger: #ffffff;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: #050505;
+            min-height: 100vh;
+            padding: 30px 20px;
+            color: var(--text);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 50% 0%, rgba(255,255,255,0.055), transparent 38%),
+                radial-gradient(circle at 50% 100%, rgba(255,255,255,0.025), transparent 40%);
+            z-index: 0;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header,
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            box-shadow:
+                0 20px 60px rgba(0,0,0,0.45),
+                0 0 30px rgba(255,255,255,0.015);
+        }
+
+        .header {
+            padding: 38px 30px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before,
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 15%;
+            width: 70%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+        }
+
+        .header h1 {
+            font-family: 'Lilita One', sans-serif;
+            color: #fff;
+            font-size: clamp(34px, 5vw, 52px);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            text-shadow:
+                0 0 12px rgba(255,255,255,0.2),
+                0 0 32px rgba(255,255,255,0.08);
+        }
+
+        .header p {
+            color: #888;
+            font-size: 14px;
+            letter-spacing: 0.8px;
+        }
+
+        .card {
+            padding: 30px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            transition:
+                border-color 0.25s ease,
+                background 0.25s ease,
+                transform 0.25s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(255,255,255,0.14);
+            background: var(--card-hover);
+        }
+
+        .card h2 {
+            font-family: 'Lilita One', sans-serif;
+            color: #fff;
+            font-size: 26px;
+            letter-spacing: 1px;
+            margin-bottom: 22px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 13px;
+            text-shadow: 0 0 12px rgba(255,255,255,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #aaa;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group textarea {
+            width: 100%;
+            padding: 13px 14px;
+            background: rgba(0,0,0,0.35);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 9px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition:
+                border-color 0.25s ease,
+                background 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #555;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: rgba(255,255,255,0.35);
+            background: rgba(255,255,255,0.035);
+            box-shadow: 0 0 20px rgba(255,255,255,0.035);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #fff;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 12px 22px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            background: rgba(255,255,255,0.025);
+            color: #aaa;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            border-color: rgba(255,255,255,0.3);
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.45),
+                0 0 18px rgba(255,255,255,0.04);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary,
+        .btn-success,
+        .btn-danger {
+            background: rgba(255,255,255,0.04);
+            color: #fff;
+        }
+
+        .btn-primary:hover,
+        .btn-success:hover,
+        .btn-danger:hover {
+            background: #fff;
+            color: #050505;
+            border-color: #fff;
+            box-shadow: 0 0 25px rgba(255,255,255,0.15);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.025);
+            color: #fff;
+            padding: 22px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.25s ease;
+        }
+
+        .stat-card:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.18);
+            transform: translateY(-2px);
+        }
+
+        .stat-card h3 {
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .stat-card p {
+            font-family: 'Lilita One', sans-serif;
+            font-size: 30px;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255,255,255,0.12);
+        }
+
+        .log-entry {
+            background: rgba(255,255,255,0.02);
+            padding: 16px;
+            border-radius: 9px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-left: 2px solid rgba(255,255,255,0.35);
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .log-entry:hover {
+            background: rgba(255,255,255,0.045);
+            border-color: rgba(255,255,255,0.16);
+            border-left-color: #fff;
+        }
+
+        .log-entry .log-type {
+            font-weight: 700;
+            color: #fff;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .log-entry .log-time {
+            color: #555;
+            font-size: 11px;
+            margin-top: 4px;
+        }
+
+        .log-entry .log-details {
+            margin-top: 7px;
+            font-size: 12px;
+            color: #888;
+            line-height: 1.7;
+        }
+
+        .alert {
+            padding: 14px 16px;
+            border-radius: 9px;
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.035);
+            color: #ddd;
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+        }
+
+        .alert-success {
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .alert-error {
+            border-color: rgba(255,255,255,0.12);
+            color: #bbb;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .server-url {
+            background: rgba(0,0,0,0.35);
+            color: #aaa;
+            padding: 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-family: monospace;
+            font-size: 13px;
+        }
+
+        #loadingSpinner {
+            border: 3px solid rgba(255,255,255,0.08);
+            border-top: 3px solid #fff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            box-shadow: 0 0 15px rgba(255,255,255,0.05);
+        }
+
+        #fullConfig {
+            background: rgba(0,0,0,0.45) !important;
+            color: #aaa !important;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        #logsContainer > p {
+            color: #555 !important;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 650px) {
+            body {
+                padding: 15px;
+            }
+
+            .header {
+                padding: 30px 18px;
+            }
+
+            .header h1 {
+                font-size: 34px;
+            }
+
+            .card {
+                padding: 22px 18px;
+            }
+
+            .card h2 {
+                font-size: 23px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .btn {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>STUMBLE DARK</h1>
+            <p>Asset Update System</p>
+        </div>
+
+        <!-- Server URL Configuration -->
+        <div class="card">
+            <h2>⚙️ Server Configuration</h2>
+            <div class="form-group">
+                <label>Backend URL:</label>
+                <input type="text" id="serverUrl" value="https://apix333up.railway.app" placeholder="http://your-server.com">
+            </div>
+            <button class="btn btn-success" onclick="testConnection()">Test Connection</button>
+        </div>
+
+        <!-- Alert Messages -->
+        <div id="alertContainer"></div>
+
+        <!-- Statistics -->
+        <div class="card">
+            <h2>📊 Current Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Current Version</h3>
+                    <p id="statVersion">-</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Assets</h3>
+                    <p id="statAssets">-</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Size</h3>
+                    <p id="statSize">-</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Force Update</h3>
+                    <p id="statForce">-</p>
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="loadConfig()">🔄 Refresh Statistics</button>
+        </div>
+
+        <!-- Update Version Form -->
+        <div class="card">
+            <h2>🚀 Update Asset Version</h2>
+            <form id="updateForm" onsubmit="updateVersion(event)">
+                <div class="form-group">
+                    <label>New Version Number:</label>
+                    <input type="number" id="versionNumber" min="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Popup Title:</label>
+                    <input type="text" id="popupTitle" placeholder="Update Available">
+                </div>
+
+                <div class="form-group">
+                    <label>Popup Message:</label>
+                    <textarea id="popupMessage" placeholder="New assets are available. Download now to continue playing."></textarea>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="forceUpdate">
+                    <label for="forceUpdate">Force Update (Block gameplay until download completes)</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary">📤 Push Update</button>
+            </form>
+        </div>
+
+        <!-- Download Logs -->
+        <div class="card">
+            <h2>📜 Recent Download Logs</h2>
+            <button class="btn btn-primary" onclick="loadLogs()">🔄 Refresh Logs</button>
+            <button class="btn btn-success" onclick="loadLogs('VERSION_CHECK')">Version Checks</button>
+            <button class="btn btn-success" onclick="loadLogs('ASSET_DOWNLOAD')">Downloads</button>
+            <button class="btn btn-success" onclick="loadLogs('DOWNLOAD_COMPLETE')">Completions</button>
+            
+            <div id="loadingSpinner" class="hidden"></div>
+            <div id="logsContainer" style="margin-top: 20px;"></div>
+        </div>
+
+        <!-- Full Configuration -->
+        <div class="card">
+            <h2>🔧 Full Configuration</h2>
+            <button class="btn btn-primary" onclick="loadFullConfig()">View Full Config</button>
+            <pre id="fullConfig" style="background: #f7fafc; padding: 15px; border-radius: 5px; overflow-x: auto; margin-top: 15px; display: none;"></pre>
+        </div>
+    </div>
+
+    <script>
+        const getServerUrl = () => document.getElementById('serverUrl').value.trim();
+
+        function showAlert(message, type = 'success') {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            alertContainer.appendChild(alertDiv);
+
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 5000);
+        }
+
+        async function testConnection() {
+            try {
+                const response = await fetch(`${getServerUrl()}/api/assets/admin/config`);
+                if (response.ok) {
+                    showAlert('✓ Connection successful!', 'success');
+                    loadConfig();
+                } else {
+                    showAlert('✗ Connection failed: ' + response.statusText, 'error');
+                }
+            } catch (error) {
+                showAlert('✗ Connection error: ' + error.message, 'error');
+            }
+        }
+
+        async function loadConfig() {
+            try {
+                const response = await fetch(`${getServerUrl()}/api/assets/admin/config`);
+                const config = await response.json();
+
+                document.getElementById('statVersion').textContent = config.currentVersion;
+                document.getElementById('statAssets').textContent = config.assets.length;
+                document.getElementById('statSize').textContent = config.downloadSizeText;
+                document.getElementById('statForce').textContent = config.forceUpdate ? 'YES' : 'NO';
+
+                document.getElementById('versionNumber').value = config.currentVersion + 1;
+                document.getElementById('popupTitle').value = config.popupTitle;
+                document.getElementById('popupMessage').value = config.popupMessage;
+                document.getElementById('forceUpdate').checked = config.forceUpdate;
+
+            } catch (error) {
+                showAlert('Failed to load config: ' + error.message, 'error');
+            }
+        }
+
+        async function updateVersion(event) {
+            event.preventDefault();
+
+            const data = {
+                version: parseInt(document.getElementById('versionNumber').value),
+                title: document.getElementById('popupTitle').value,
+                message: document.getElementById('popupMessage').value,
+                forceUpdate: document.getElementById('forceUpdate').checked
+            };
+
+            try {
+                const response = await fetch(`${getServerUrl()}/api/assets/admin/update-version`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showAlert(`✓ Successfully updated to version ${result.currentVersion}!`, 'success');
+                    loadConfig();
+                } else {
+                    showAlert('✗ Update failed: ' + result.message, 'error');
+                }
+            } catch (error) {
+                showAlert('✗ Error: ' + error.message, 'error');
+            }
+        }
+
+        async function loadLogs(type = '') {
+            const logsContainer = document.getElementById('logsContainer');
+            const spinner = document.getElementById('loadingSpinner');
+            
+            spinner.classList.remove('hidden');
+            logsContainer.innerHTML = '';
+
+            try {
+                const url = type 
+                    ? `${getServerUrl()}/api/assets/admin/logs?limit=20&type=${type}`
+                    : `${getServerUrl()}/api/assets/admin/logs?limit=20`;
+
+                const response = await fetch(url);
+                const data = await response.json();
+
+                spinner.classList.add('hidden');
+
+                if (data.logs.length === 0) {
+                    logsContainer.innerHTML = '<p style="color: #999;">No logs found</p>';
+                    return;
+                }
+
+                data.logs.reverse().forEach(log => {
+                    const logDiv = document.createElement('div');
+                    logDiv.className = 'log-entry';
+
+                    const details = [];
+                    if (log.clientVersion !== undefined) details.push(`Client: v${log.clientVersion}`);
+                    if (log.serverVersion !== undefined) details.push(`Server: v${log.serverVersion}`);
+                    if (log.platform) details.push(`Platform: ${log.platform}`);
+                    if (log.assetName) details.push(`Asset: ${log.assetName}`);
+                    if (log.size) details.push(`Size: ${(log.size / 1024 / 1024).toFixed(2)} MB`);
+                    if (log.valid !== undefined) details.push(`Valid: ${log.valid ? 'YES' : 'NO'}`);
+
+                    logDiv.innerHTML = `
+                        <div class="log-type">${log.type}</div>
+                        <div class="log-time">${new Date(log.timestamp).toLocaleString()}</div>
+                        <div class="log-details">${details.join(' • ')}</div>
+                    `;
+
+                    logsContainer.appendChild(logDiv);
+                });
+
+            } catch (error) {
+                spinner.classList.add('hidden');
+                showAlert('Failed to load logs: ' + error.message, 'error');
+            }
+        }
+
+        async function loadFullConfig() {
+            const configPre = document.getElementById('fullConfig');
+            
+            try {
+                const response = await fetch(`${getServerUrl()}/api/assets/admin/config`);
+                const config = await response.json();
+
+                configPre.textContent = JSON.stringify(config, null, 2);
+                configPre.style.display = 'block';
+            } catch (error) {
+                showAlert('Failed to load full config: ' + error.message, 'error');
+            }
+        }
+
+        // Load initial data
+        window.addEventListener('load', () => {
+            loadConfig();
+        });
+    </script>
+</body>
+</html>

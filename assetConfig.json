@@ -1,0 +1,78 @@
+{
+  "currentVersion": 15,
+  "forceUpdate": true,
+  "downloadSize": 69620000,
+  "downloadSizeText": "69.62 MB",
+  "popupTitle": "Update Available",
+  "popupMessage": "New assets are available. Download now to continue playing.",
+  "required": true,
+  "minClientVersion": "0.56",
+  "assets": [
+    {
+      "id": "unity-main-bundle",
+      "name": "main.bundle",
+      "type": "bundle",
+      "platform": "android",
+      "version": 15,
+      "size": 45000000,
+      "sizeText": "42.91 MB",
+      "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "crc": "A1B2C3D4",
+      "url": "/api/assets/download/unity-main-bundle",
+      "priority": 1,
+      "required": true
+    },
+    {
+      "id": "unity-shared-assets",
+      "name": "shared.assets",
+      "type": "assets",
+      "platform": "android",
+      "version": 15,
+      "size": 15000000,
+      "sizeText": "14.31 MB",
+      "hash": "d7a8fbb307d7809469ca9abcb0082e4f8d5651e46d3cdb762d02d0bf37c9e592",
+      "crc": "E5F6G7H8",
+      "url": "/api/assets/download/unity-shared-assets",
+      "priority": 2,
+      "required": true
+    },
+    {
+      "id": "level-data",
+      "name": "levels.dat",
+      "type": "data",
+      "platform": "all",
+      "version": 15,
+      "size": 5620000,
+      "sizeText": "5.36 MB",
+      "hash": "6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090",
+      "crc": "I9J0K1L2",
+      "url": "/api/assets/download/level-data",
+      "priority": 3,
+      "required": true
+    },
+    {
+      "id": "cosmetics-bundle",
+      "name": "cosmetics.bundle",
+      "type": "bundle",
+      "platform": "android",
+      "version": 15,
+      "size": 4000000,
+      "sizeText": "3.81 MB",
+      "hash": "c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2",
+      "crc": "M3N4O5P6",
+      "url": "/api/assets/download/cosmetics-bundle",
+      "priority": 4,
+      "required": false
+    }
+  ],
+  "manifestVersion": 1,
+  "updateNotes": [
+    "New game levels added",
+    "Performance improvements",
+    "Bug fixes and optimizations"
+  ],
+  "cdnUrls": [
+    "https://your-cdn.com/assets",
+    "https://backup-cdn.com/assets"
+  ]
+}
